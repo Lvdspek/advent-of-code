@@ -1,2 +1,2 @@
 # advent-of-code
-Gists at [advent of code](adventofcode.com) puzzles
+Gists at [adventofcode](https://adventofcode.com/) puzzles
