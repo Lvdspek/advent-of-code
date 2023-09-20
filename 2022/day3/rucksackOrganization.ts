@@ -3,15 +3,15 @@ const fs = require('fs');
 const data = fs.readFileSync("input.txt", "utf-8");
 
 const dataSets = data.split('\n');
-console.log(dataSets.slice(0,3));
+console.log(dataSets.length);
 
 const alphabet = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
 console.log(alphabet);
 
 let totalScore = 0;
-for(let dataSet of dataSets) {
-	const dupe = findDupe(dataSet.slice(0, dataSet.length / 2), dataSet.slice(dataSet.length / 2, dataSet.length - 1));
-	// console.log(dupe);
+for (let i = 0; i < dataSets.length; i += 3) {
+	const dupe = findDupeFromThreeSets(dataSets[i], dataSets[i+1], dataSets[i+2]);
+
 	if (dupe === undefined) {
 		continue;
 		console.log(rankCharacter("Dupe is undefined"));
@@ -26,6 +26,14 @@ for(let dataSet of dataSets) {
 }
 
 console.log(totalScore);
+function findDupeFromThreeSets(compartment1: string, compartment2: string, compartment3: string) : string | undefined {
+	for (let char of compartment1) {
+		if (compartment2.includes(char) && compartment3.includes(char)) {
+			return char;
+		}
+	}
+	return undefined;
+}
 
 function findDupe(compartment1: string, compartment2: string) : string | undefined {
 	for (let char of compartment1) {
