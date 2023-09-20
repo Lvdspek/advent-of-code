@@ -9,7 +9,7 @@ const range = (start : number, end : number, step : number) : number[] => {
   return Array.from(Array.from(Array(Math.ceil((end-start)/step)).keys()), x => start+ x*step);
 }
 
-const checker = (arr : any[], target: any[]) => { return target.every(v => arr.includes(v)); }
+const checker = (arr : any[], target: any[]) => { return target.some(v => arr.includes(v)); }
 
 let overlaps = 0;
 
