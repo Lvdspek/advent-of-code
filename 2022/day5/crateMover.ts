@@ -31,6 +31,7 @@ for (let move of dataSets) {
     console.log(crateArrays[crateLaneFrom - 1]);
     console.log(crateArrays[crateLaneTo - 1]);
 
+    let cratesToMove : string[] = [];
     for (let i = 0; i < numberOfCratesToMove; i++) {
         const crateToMove = crateArrays[crateLaneFrom - 1].pop();
         console.log(crateToMove);
@@ -40,9 +41,10 @@ for (let move of dataSets) {
             break;
         }
 
-        crateArrays[crateLaneTo - 1].push(crateToMove);
+        cratesToMove.unshift(crateToMove);
     }
 
+    cratesToMove.forEach((c) => crateArrays[crateLaneTo - 1].push(c));
     console.log(crateArrays[crateLaneFrom - 1]);
     console.log(crateArrays[crateLaneTo - 1]);
 }
