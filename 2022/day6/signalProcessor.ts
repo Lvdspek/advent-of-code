@@ -4,12 +4,13 @@ const signal = fs.readFileSync("day6/input.txt", "utf-8");
 
 let result : number = -1;
 
+const identifierSize = 14;
 for (let charIndex = 0; charIndex < signal.length; charIndex++) {
-    if (charIndex < 14) {
+    if (charIndex < identifierSize) {
         continue;
     }
 
-    const subset = signal.slice(charIndex - 14, charIndex);
+    const subset = signal.slice(charIndex - identifierSize, charIndex);
 //    console.log(subset);
     let areAllInSubsetUnique = true;
 
