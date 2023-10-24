@@ -8,17 +8,22 @@ const maxWidth = treeRows[0].length;
 
 treeRows = treeRows.slice(0,maxHeight);
 
-let totalVisibleTrees = 0;
+let bestScenicScore = 0;
 
 for (let y = 0; y < maxHeight; y++) {
     for (let x = 0; x < maxWidth; x++) {
-        if (isVisible(x, y)) {
-            totalVisibleTrees++;
+        let scenicScore = 0;
+        scenicScore = checkUpwards(x,y);
+        scenicScore *= checkDownwards(x,y);
+        scenicScore *= checkLeft(x,y);
+        scenicScore *= checkRight(x,y);
+        if (bestScenicScore < scenicScore) {
+            bestScenicScore = scenicScore;
         }
     }
 }
 
-console.log(totalVisibleTrees);
+console.log(bestScenicScore);
 
 function isVisible(x: number, y: number) : boolean {
 
@@ -36,56 +41,68 @@ function isVisible(x: number, y: number) : boolean {
 
 function checkUpwards(x: number, y: number) : number {
     
-    let heighestTree = 0;
+    let treesInSight = 0;
+    let currentTreeHeight = treeRows[y][x];
 
     for (let i = y-1; i >= 0; i--) {
         let treeHeight = treeRows[i][x];
-        if (treeHeight > heighestTree) {
-            heighestTree = treeHeight;
+        treesInSight++; 
+
+        if (treeHeight >= currentTreeHeight) {
+            return treesInSight;
         }
     }
 
-    return heighestTree;
+    return treesInSight;
 }
         
 function checkDownwards(x: number, y: number) : number {
     
-    let heighestTree = 0;
+    let treesInSight = 0;
+    let currentTreeHeight = treeRows[y][x];
 
     for (let i = y+1; i < maxHeight; i++) {
         let treeHeight = treeRows[i][x];
-        if (treeHeight > heighestTree) {
-            heighestTree = treeHeight;
+        treesInSight++; 
+
+        if (treeHeight >= currentTreeHeight) {
+            return treesInSight;
         }
     }
 
-    return heighestTree;
+    return treesInSight;
 }
 
 function checkLeft(x: number, y: number) : number {
     
-    let heighestTree = 0;
+    let treesInSight = 0;
+    let currentTreeHeight = treeRows[y][x];
 
     for (let i = x-1; i >= 0; i--) {
         let treeHeight = treeRows[y][i];
-        if (treeHeight > heighestTree) {
-            heighestTree = treeHeight;
+        treesInSight++; 
+
+        if (treeHeight >= currentTreeHeight) {
+            return treesInSight;
         }
     }
 
-    return heighestTree;
+    return treesInSight;
 }
 
 function checkRight(x: number, y: number) : number {
-    
-    let heighestTree = 0;
+
+    let treesInSight = 0;
+    let currentTreeHeight = treeRows[y][x];
 
     for (let i = x+1; i < maxWidth; i++) {
         let treeHeight = treeRows[y][i];
-        if (treeHeight > heighestTree) {
-            heighestTree = treeHeight;
+        treesInSight++; 
+
+        if (treeHeight >= currentTreeHeight) {
+            return treesInSight;
         }
     }
 
-    return heighestTree;
+    return treesInSight;
 }
