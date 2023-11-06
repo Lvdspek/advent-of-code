@@ -8,10 +8,19 @@ type Point = {
     y: number;
 };
 
-let headVisits: Point[] = [];
 let tailVisits: Point[] = [];
 let currHead: Point = { x : 0, y : 0 };
+let curr1: Point = { x : 0, y : 0 };
+let curr2: Point = { x : 0, y : 0 };
+let curr3: Point = { x : 0, y : 0 };
+let curr4: Point = { x : 0, y : 0 };
+let curr5: Point = { x : 0, y : 0 };
+let curr6: Point = { x : 0, y : 0 };
+let curr7: Point = { x : 0, y : 0 };
+let curr8: Point = { x : 0, y : 0 };
 let currTail: Point = { x : 0, y : 0 };
+let knots: Point[] = [currHead, curr1, curr2, curr3, curr4, curr5, curr6,
+    curr7, curr8, currTail];
 tailVisits.push(currTail);
 
 for (let move of moves) {
@@ -38,9 +47,8 @@ for (let move of moves) {
 
     for (let i = 0; i < steps; i++) {
         const newHead = { x: currHead.x + dir[0], y: currHead.y + dir[1] };
-        headVisits.push(newHead);
-        console.log("head: ", headVisits[headVisits.length-1]);
         currHead = newHead;
+
 
         let newTail = walkTail(currHead, currTail);
 
