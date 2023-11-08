@@ -46,19 +46,28 @@ for (let move of moves) {
     }
 
     for (let i = 0; i < steps; i++) {
-        const newHead = { x: currHead.x + dir[0], y: currHead.y + dir[1] };
-        currHead = newHead;
+        let currKnot = knots[0];
+        const newKnot = { x: currKnot.x + dir[0], y: currKnot.y + dir[1] };
+        knots[0] = newKnot;
+        currKnot = newKnot;
 
+        for (let knotIndex = 1; knotIndex < knots.length; knotIndex++) {
 
-        let newTail = walkTail(currHead, currTail);
+            let followingKnot = knots[knotIndex];
+            let newFollowing = walkTail(currKnot, followingKnot);
+            knots[knotIndex] = newFollowing;
+            currKnot = newFollowing;
 
-        var distinct = tailVisits.findIndex(p => (p.x == newTail.x && p.y === newTail.y));
-        if(distinct <= -1){
-            tailVisits.push(newTail);
-        }        
-        currTail = newTail;
-        console.log("tail: ", tailVisits[tailVisits.length-1]);
-        console.log("Number of tail visits: ", tailVisits.length);
+            if (knotIndex === knots.length - 1) {
+
+                var distinct = tailVisits.findIndex(p => (p.x == newFollowing.x && p.y === newFollowing.y));
+                if(distinct <= -1){
+                    tailVisits.push(newFollowing);
+                }        
+            }
+            console.log("tail: ", tailVisits[tailVisits.length-1]);
+            console.log("Number of tail visits: ", tailVisits.length);
+        }
     }
 }
 
