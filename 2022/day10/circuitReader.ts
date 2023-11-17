@@ -5,11 +5,10 @@ let instructions = inputText.split("\r\n");
 
 let registerValue = 1;
 let cycles = 0;
-let signalStrength = 0;
+let crt: string[] = ["","","","","",""];
+let crtIndex = 0;
 
 for(var instruction of instructions) {
-
-    //console.log(instruction);
 
     if (instruction.startsWith("noop")) {
         increaseCycle();
@@ -18,24 +17,29 @@ for(var instruction of instructions) {
         increaseCycle();
         increaseCycle();
         let addValue = Number(instruction.split(' ')[1]);
-        //console.log(addValue);
         registerValue = registerValue + addValue;
     }
 }
 
-console.log("register X: ", registerValue);
-console.log("cycles: ", cycles);
-console.log("signal strength: ", signalStrength);
-
 function increaseCycle() {
+
+    if (cycles !== 0 && cycles % 40 === 0) {
+        crtIndex++;
+    }
+
+    if (registerValue === (cycles - 40 * crtIndex) ||
+        registerValue === (cycles - 40 * crtIndex) + 1 ||
+        registerValue === (cycles - 40 * crtIndex) - 1) {
+
+        crt[crtIndex] += "#";
+    }
+    else {
+        crt[crtIndex] += ".";
+    }
+
     cycles++;
 
-    if (cycles === 20 || 
-        cycles === 60 ||
-        cycles === 100 ||
-        cycles === 140 ||
-        cycles === 180 ||
-        cycles === 220) {
-        signalStrength += registerValue * cycles;
+    if (cycles % 40 === 0) {
+        console.log(crt[crtIndex]);
     }
 }
