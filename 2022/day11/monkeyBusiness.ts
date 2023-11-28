@@ -11,20 +11,28 @@ monkeys.set(7, [71, 57, 86, 67, 96, 95]);
 
 let monkeyInspections = [0,0,0,0,0,0,0,0];
 
+for (let rounds = 0; rounds < 20; rounds++) {
+    monkeys.forEach((_, monkeyId : number) => {
+        doBusiness(monkeyId);
+    })
+}
+console.log(monkeyInspections);
+
+
 function doBusiness(monkeyId: number) : void {
 
-    for (let itemIndex = 0; itemIndex < monkeys.get(monkeyId).length; itemIndex++)
+    let numberOfItems = monkeys.get(monkeyId).length;
+    for (let itemIndex = 0; itemIndex < numberOfItems; itemIndex++)
     {
-
+        console.log("items for monkey ", monkeyId, ": ", monkeys.get(monkeyId).length);
         monkeyInspections[monkeyId]++;
 
         switch (monkeyId) {
             case 0: 
-                monkeys.get(monkeyId)[itemIndex] *= 11;
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item0 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 5 === 0) {
+                item0 *= 11;
+                item0 = Math.floor(item0 / 3);
+                if (item0 % 5 === 0) {
                     monkeys.get(7).push(item0);
                 }
                 else {
@@ -33,11 +41,10 @@ function doBusiness(monkeyId: number) : void {
                 
                 break;
             case 1: 
-                monkeys.get(monkeyId)[itemIndex] += 4;
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item1 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 2 === 0) {
+                item1 += 4;
+                item1 = Math.floor(item1 / 3);
+                if (item1 % 2 === 0) {
                     monkeys.get(2).push(item1);
                 }
                 else {
@@ -46,11 +53,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 2: 
-                monkeys.get(monkeyId)[itemIndex] *= 19;
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item2 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 13 === 0) {
+                item2 *= 19;
+                item2 = Math.floor(item2 / 3);
+                if (item2 % 13 === 0) {
                     monkeys.get(5).push(item2);
                 }
                 else {
@@ -59,11 +65,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 3: 
-                monkeys.get(monkeyId)[itemIndex] *= monkeys.get(monkeyId)[itemIndex];
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item3 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 7 === 0) {
+                item3 *= item3;
+                item3 = Math.floor(item3 / 3);
+                if (item3 % 7 === 0) {
                     monkeys.get(6).push(item3);
                 }
                 else {
@@ -72,11 +77,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 4: 
-                monkeys.get(monkeyId)[itemIndex] += 1; 
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item4 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 19 === 0) {
+                item4 += 1;
+                item4 = Math.floor(item4 / 3);
+                if (item4 % 19 === 0) {
                     monkeys.get(3).push(item4);
                 }
                 else {
@@ -85,11 +89,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 5: 
-                monkeys.get(monkeyId)[itemIndex] += 3; 
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item5 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 11 === 0) {
+                item5 += 3;
+                item5 = Math.floor(item5 / 3);
+                if (item5 % 11 === 0) {
                     monkeys.get(0).push(item5);
                 }
                 else {
@@ -98,11 +101,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 6: 
-                monkeys.get(monkeyId)[itemIndex] += 8; 
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item6 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 3 === 0) {
+                item6 += 8;
+                item6 = Math.floor(item6 / 3);
+                if (item6 % 3 === 0) {
                     monkeys.get(5).push(item6);
                 }
                 else {
@@ -111,11 +113,10 @@ function doBusiness(monkeyId: number) : void {
 
                 break;
             case 7: 
-                monkeys.get(monkeyId)[itemIndex] += 7; 
-                monkeys.get(monkeyId)[itemIndex] = 
-                    Math.floor(monkeys.get(monkeyId)[itemIndex] / 3);
                 let item7 = monkeys.get(monkeyId).shift();
-                if (monkeys.get(monkeyId)[itemIndex] % 17 === 0) {
+                item7 += 7;
+                item7 = Math.floor(item7 / 3);
+                if (item7 % 17 === 0) {
                     monkeys.get(3).push(item7);
                 }
                 else {
@@ -127,14 +128,8 @@ function doBusiness(monkeyId: number) : void {
 
         
         monkeys.forEach((items, monkeyId : number) => {
-            console.log(`${monkeyId}: ${monkeys.get(monkeyId)}`);
+            console.log(`${monkeyId}: ${items}`);
         })
     }
 }
 
-for (let rounds = 0; rounds < 2; rounds++) {
-    monkeys.forEach((items, monkeyId : number) => {
-        doBusiness(monkeyId);
-    })
-}
-console.log(monkeyInspections);
