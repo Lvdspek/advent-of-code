@@ -11,7 +11,7 @@ monkeys.set(7, [71, 57, 86, 67, 96, 95]);
 
 let monkeyInspections = [0,0,0,0,0,0,0,0];
 
-for (let rounds = 0; rounds < 20; rounds++) {
+for (let rounds = 0; rounds < 10000; rounds++) {
     monkeys.forEach((_, monkeyId : number) => {
         doBusiness(monkeyId);
     })
@@ -31,7 +31,6 @@ function doBusiness(monkeyId: number) : void {
             case 0: 
                 let item0 = monkeys.get(monkeyId).shift();
                 item0 *= 11;
-                item0 = Math.floor(item0 / 3);
                 if (item0 % 5 === 0) {
                     monkeys.get(7).push(item0);
                 }
@@ -43,7 +42,6 @@ function doBusiness(monkeyId: number) : void {
             case 1: 
                 let item1 = monkeys.get(monkeyId).shift();
                 item1 += 4;
-                item1 = Math.floor(item1 / 3);
                 if (item1 % 2 === 0) {
                     monkeys.get(2).push(item1);
                 }
@@ -55,7 +53,6 @@ function doBusiness(monkeyId: number) : void {
             case 2: 
                 let item2 = monkeys.get(monkeyId).shift();
                 item2 *= 19;
-                item2 = Math.floor(item2 / 3);
                 if (item2 % 13 === 0) {
                     monkeys.get(5).push(item2);
                 }
@@ -67,7 +64,6 @@ function doBusiness(monkeyId: number) : void {
             case 3: 
                 let item3 = monkeys.get(monkeyId).shift();
                 item3 *= item3;
-                item3 = Math.floor(item3 / 3);
                 if (item3 % 7 === 0) {
                     monkeys.get(6).push(item3);
                 }
@@ -79,7 +75,6 @@ function doBusiness(monkeyId: number) : void {
             case 4: 
                 let item4 = monkeys.get(monkeyId).shift();
                 item4 += 1;
-                item4 = Math.floor(item4 / 3);
                 if (item4 % 19 === 0) {
                     monkeys.get(3).push(item4);
                 }
@@ -91,7 +86,6 @@ function doBusiness(monkeyId: number) : void {
             case 5: 
                 let item5 = monkeys.get(monkeyId).shift();
                 item5 += 3;
-                item5 = Math.floor(item5 / 3);
                 if (item5 % 11 === 0) {
                     monkeys.get(0).push(item5);
                 }
@@ -103,7 +97,6 @@ function doBusiness(monkeyId: number) : void {
             case 6: 
                 let item6 = monkeys.get(monkeyId).shift();
                 item6 += 8;
-                item6 = Math.floor(item6 / 3);
                 if (item6 % 3 === 0) {
                     monkeys.get(5).push(item6);
                 }
@@ -115,7 +108,6 @@ function doBusiness(monkeyId: number) : void {
             case 7: 
                 let item7 = monkeys.get(monkeyId).shift();
                 item7 += 7;
-                item7 = Math.floor(item7 / 3);
                 if (item7 % 17 === 0) {
                     monkeys.get(3).push(item7);
                 }
