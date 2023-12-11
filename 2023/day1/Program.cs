@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-using (var sr = new StreamReader("day1/testinput.txt"))
+using (var sr = new StreamReader("day1/input.txt"))
 {
     int count = 0;
     string? line = sr.ReadLine();
@@ -12,20 +12,23 @@ using (var sr = new StreamReader("day1/testinput.txt"))
         count++;
 
         Console.WriteLine(line);
-        int[] numberIndices = new int[9];
+        int[] numberIndicesMin = new int[9];
+        int[] numberIndicesMax = new int[9];
         for (int i = 0; i < numberWords.Length; i++) {
-            numberIndices[i] = line.IndexOf(numberWords[i]);
+            numberIndicesMin[i] = line.IndexOf(numberWords[i]);
+            numberIndicesMax[i] = line.LastIndexOf(numberWords[i]);
         }
 
         int? min = null;
         int? max = null;
-        if (numberIndices.Any(x => x > -1)) {
-            min = Array.IndexOf(numberIndices, numberIndices.Where(x => x > -1).Min());
-            max = Array.IndexOf(numberIndices, numberIndices.Where(x => x > -1).Max());
+        if (numberIndicesMin.Any(x => x > -1)) {
+            min = Array.IndexOf(numberIndicesMin, numberIndicesMin.Where(x => x > -1).Min());
+            max = Array.IndexOf(numberIndicesMax, numberIndicesMax.Where(x => x > -1).Max());
             Console.WriteLine($"Found min and max: {min+1}, {max+1}");
         } 
 
-        if (min != null) {
+        if (min != null && !line.Any(Char.IsDigit) || (min != null && line.Any(Char.IsDigit) &&
+                    line.IndexOf(numberWords[min ?? 99]) < line.IndexOf(line.First(Char.IsDigit)))) {
 
             switch(min) 
             {
@@ -58,37 +61,37 @@ using (var sr = new StreamReader("day1/testinput.txt"))
                     break;
             }
         }
-        // TODO: ReplaceLast
 
-        if (max != null) {
+        if (max != null && !line.Any(Char.IsDigit) || (max != null && line.Any(Char.IsDigit) &&
+                    line.IndexOf(numberWords[max ?? 0]) > line.IndexOf(line.First(Char.IsDigit)))) {
             switch(max) 
             {
                 case 0:
-                    line = line.Replace("one", "1");
+                    line = ReplaceLast(line, "one", "1");
                     break;
                 case 1:
-                    line = line.Replace("two", "2");
+                    line = ReplaceLast(line, "two", "2");
                     break;
                 case 2:
-                    line = line.Replace("three", "3");
+                    line = ReplaceLast(line, "three", "3");
                     break;
                 case 3:
-                    line = line.Replace("four", "4");
+                    line = ReplaceLast(line, "four", "4");
                     break;
                 case 4:
-                    line = line.Replace("five", "5");
+                    line = ReplaceLast(line, "five", "5");
                     break;
                 case 5:
-                    line = line.Replace("six", "6");
+                    line = ReplaceLast(line, "six", "6");
                     break;
                 case 6:
-                    line = line.Replace("seven", "7");
+                    line = ReplaceLast(line, "seven", "7");
                     break;
                 case 7:
-                    line = line.Replace("eight", "8");
+                    line = ReplaceLast(line, "eight", "8");
                     break;
                 case 8:
-                    line = line.Replace("nine", "9");
+                    line = ReplaceLast(line, "nine", "9");
                     break;
             }
         }
@@ -102,7 +105,6 @@ using (var sr = new StreamReader("day1/testinput.txt"))
         numberSum += numberCombination;
 
         line = sr.ReadLine();
-        //if (count > 20) break;
     }
     Console.WriteLine(numberSum);
 
@@ -111,4 +113,13 @@ using (var sr = new StreamReader("day1/testinput.txt"))
 string ReplaceFirst(string text, string oldText, string newText) {
     var regex = new Regex(Regex.Escape(oldText));
     return regex.Replace(text, newText, 1);
+}
+
+string ReplaceLast(string text, string oldText, string newText) {
+    int place = text.LastIndexOf(oldText);
+
+    if (place == -1)
+        return text;
+
+    return text.Remove(place, oldText.Length).Insert(place, newText);
 }
