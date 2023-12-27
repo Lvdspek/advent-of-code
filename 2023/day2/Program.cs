@@ -5,16 +5,16 @@ int maxBlue = 14;
 using (var sr = new StreamReader("input.txt"))
 {
     string? line = sr.ReadLine();
-    int score = 0;
+    int validScore = 0;
     int gamePowerScore = 0;
 
     while (line != null)
     {
 
         int gameNumber = getGameNumber(line);
-        Console.WriteLine(gameNumber);
+        // Console.WriteLine(gameNumber);
         var games = getGames(line);
-        Console.WriteLine(string.Join(";", games));
+        // Console.WriteLine(string.Join(";", games));
         bool areAllGamesValid = true;
         
         int minRed = 0;
@@ -48,7 +48,7 @@ using (var sr = new StreamReader("input.txt"))
         }
 
         if (areAllGamesValid)
-            score += gameNumber;
+            validScore += gameNumber;
 
         int gamePower = minRed * minGreen * minBlue;
         gamePowerScore += gamePower;
@@ -56,7 +56,7 @@ using (var sr = new StreamReader("input.txt"))
         line = sr.ReadLine();
     }
 
-    Console.WriteLine($"Valid score: {score}");
+    Console.WriteLine($"Valid score: {validScore}");
     Console.WriteLine($"Power score: {gamePowerScore}");
 }
 
