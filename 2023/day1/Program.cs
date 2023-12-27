@@ -103,7 +103,7 @@ using (var sr = new StreamReader("day1/input.txt"))
         var numberCombination = int.Parse(string.Concat(numbers[0], numbers.Last()));
         Console.WriteLine(numberCombination);
         numberSum += numberCombination;
-
+    
         line = sr.ReadLine();
     }
     Console.WriteLine(numberSum);
