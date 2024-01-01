@@ -1,6 +1,6 @@
-﻿string symbols = "/!@#$%^&*()-_=+";
-string numbers = "0123456789";
+﻿string numbers = "0123456789";
 Dictionary<int, List<int>> numberIndices = new();
+List<Coordinate> starPoints = new();
 var schematicLines = new List<string>();
 
 using (var sr = new StreamReader("input.txt"))
@@ -18,9 +18,21 @@ using (var sr = new StreamReader("input.txt"))
 
     numberIndices = GetNumberIndices(schematicLines);
     var partNumbers = GetPartNumbers(numberIndices);
-    Console.WriteLine($"Sum of part numbers: {partNumbers.Sum()}");
 
+    List<int> gearIndices = new();
+    int gearSum = 0;
+    for (int i = 0; i < starPoints.Count; i++)
+    {
+        if (!gearIndices.Contains(i) && starPoints.Count(s => s.X == starPoints[i].X && s.Y == starPoints[i].Y) == 2)
+        {
+            var otherIndex = starPoints.IndexOf(starPoints.Last(s => s.X == starPoints[i].X && s.Y == starPoints[i].Y));
+            gearSum += partNumbers[i] * partNumbers[otherIndex];
+            gearIndices.Add(i);
+            gearIndices.Add(otherIndex);
+        }
+    }
 
+    Console.WriteLine($"Gear sum: {gearSum}");
 }
 
 Dictionary<int, List<int>> GetNumberIndices(List<string> lines)
@@ -51,22 +63,31 @@ Dictionary<int, List<int>> GetNumberIndices(List<string> lines)
 List<int> GetPartNumbers(Dictionary<int, List<int>> numberIndices)
 {
     List<int> partsNumbers = new();
+
     foreach (var rowIndex in numberIndices.Keys)
     {
         string currentNumber = string.Empty;
         int previousIndex = 0;
-        bool symbolAdjacent = false;
+        // bool symbolAdjacent = false;
+        bool hasStarPointAdjacent = false;
+        Coordinate? starPoint = null;
 
         foreach (var columnIndex in numberIndices[rowIndex])
         {
             if (previousIndex == columnIndex - 1 || previousIndex == 0)
             {
                 currentNumber += schematicLines[rowIndex][columnIndex];
-                symbolAdjacent |= AnyAdjecentSymbols(columnIndex, rowIndex);
+                // symbolAdjacent |= AnyAdjecentSymbols(columnIndex, rowIndex);
+                starPoint = AnyGearSymbols(columnIndex, rowIndex);
+                if (!hasStarPointAdjacent && starPoint.X != -1 && starPoint.Y != -1)
+                {
+                    starPoints.Add(starPoint);
+                    hasStarPointAdjacent = true;
+                }
             }
             else
             {
-                if (symbolAdjacent)
+                if (hasStarPointAdjacent)
                 {
                     partsNumbers.Add(int.Parse(currentNumber));
                     Console.WriteLine($"Added {currentNumber}");
@@ -75,15 +96,21 @@ List<int> GetPartNumbers(Dictionary<int, List<int>> numberIndices)
                 {
                     Console.WriteLine($"Did NOT add {currentNumber}");
                 }
-
+                hasStarPointAdjacent = false;
                 currentNumber = string.Empty + schematicLines[rowIndex][columnIndex];
-                symbolAdjacent = AnyAdjecentSymbols(columnIndex, rowIndex);
+
+                starPoint = AnyGearSymbols(columnIndex, rowIndex);
+                if (!hasStarPointAdjacent && starPoint.X != -1 && starPoint.Y != -1)
+                {
+                    starPoints.Add(starPoint);
+                    hasStarPointAdjacent = true;
+                }
             }
 
             previousIndex = columnIndex;
         }
 
-        if (symbolAdjacent)
+        if (hasStarPointAdjacent)
         {
             partsNumbers.Add(int.Parse(currentNumber));
             Console.WriteLine($"Added {currentNumber}");
