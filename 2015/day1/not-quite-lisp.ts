@@ -1,6 +1,7 @@
-const fs = require('fs');
+//const fs = require('fs');
+import * as fs from 'node:fs';
 
-const data = fs.readFileSync("2015/day1/input.txt", "utf-8");
+const data = fs.readFileSync("day1/input.txt", "utf-8");
 
 let up = 0;
 let down = 0;
